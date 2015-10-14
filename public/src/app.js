@@ -88,8 +88,8 @@ app.cacheBuster = null;
 		require(['csrf'], function(csrf) {
 			$.ajax(config.relative_path + '/logout', {
 				type: 'POST',
-				headers: {
-					'x-csrf-token': csrf.get()
+				data: {
+					'_csrf': csrf.get()
 				},
 				success: function() {
 					window.location.href = config.relative_path + '/';

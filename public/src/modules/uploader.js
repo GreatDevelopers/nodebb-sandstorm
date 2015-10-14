@@ -50,7 +50,7 @@ define('uploader', ['csrf'], function(csrf) {
 
 				$(this).ajaxSubmit({
 					headers: {
-						'x-csrf-token': csrf.get()
+						'_csrf': csrf.get()
 					},
 					error: function(xhr) {
 						xhr = maybeParse(xhr);

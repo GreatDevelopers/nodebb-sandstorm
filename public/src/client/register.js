@@ -73,8 +73,8 @@ define('forum/register', ['csrf', 'translator'], function(csrf, translator) {
 					registerBtn.addClass('disabled');
 
 					registerBtn.parents('form').ajaxSubmit({
-						headers: {
-							'x-csrf-token': csrf.get()
+						data: {
+							'_csrf': csrf.get()
 						},
 						success: function(data, status) {
 							registerBtn.removeClass('disabled');

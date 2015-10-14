@@ -24,8 +24,8 @@ define('forum/login', ['csrf', 'translator'], function(csrf, translator) {
 
 				submitEl.addClass('disabled');
 				formEl.ajaxSubmit({
-					headers: {
-						'x-csrf-token': csrf.get()
+					data: {
+						'_csrf': csrf.get()
 					},
 					success: function(data, status) {
 						window.location.href = data + '?loggedin';
