@@ -28,6 +28,8 @@ set -euo pipefail
 
 # By default, this script does nothing.  You'll have to modify it as
 # appropriate for your application.
+cd /opt/app
+
 if [ ! -d "/var/nodebb" ]
 then
 	echo "First time running. Preparing the working directory."
@@ -39,7 +41,6 @@ then
 	fi
 
 	mkdir -p /var/nodebb
-	cd /opt/app
 	find `pwd` -mindepth 1 -maxdepth 1 \
 		! -name public \
 		! -name public_copyme \

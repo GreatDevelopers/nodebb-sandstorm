@@ -1,0 +1,12 @@
+{
+    "url": "http://localhost:8000",
+    "secret": "cd8fb434-d09c-4119-aaab-cc5b482f5590",
+    "database": "redis",
+    "redis": {
+        "host": "127.0.0.1",
+        "port": "6379",
+        "password": "",
+        "database": "0"
+    },
+    "port": "8000"
+}
