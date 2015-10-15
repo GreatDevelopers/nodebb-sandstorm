@@ -42,18 +42,23 @@ then
 
 	mkdir -p /var/nodebb
 	find `pwd` -mindepth 1 -maxdepth 1 \
-		! -name public \
-		! -name public_copyme \
+		! -type l \
+		! -name '*_copyme' \
 		! -name .git \
 		! -name .sandstorm \
 		-exec ln -s {} /var/nodebb/ \;
-	cp -R public_copyme /var/nodebb/public
+	cp -R public_copyme      /var/nodebb/public
+	cp    config.json_copyme /var/nodebb/config.json
 	touch /var/nodebb/output.log
+	cd /var/nodebb
+	redis-server &
+	nodejs app.js --setup="{\"url\":\"http://127.0.0.1:8000/\",\"secret\":\"abcdef\",\"database\":\"redis\",\"mongo:host\":\"127.0.0.1\",\"mongo:port\":27017,\"mongo:username\":\"\",\"mongo:password\":\"\",\"mongo:database\":0,\"redis:host\":\"127.0.0.1\",\"redis:port\":6379,\"redis:password\":\"\",\"redis:database\":0,\"admin:username\":\"admin\",\"admin:email\":\"test@example.org\",\"admin:password\":\"abcdef\",\"admin:password:confirm\":\"abcdef\"}" 
 else
 	echo "Re-launching."
+	cd /var/nodebb
+	redis-server &
 fi
 
-cd /var/nodebb
-redis-server &
-nodejs app.js #./nodebb start
+nodejs app.js
+
 exit 0
