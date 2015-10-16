@@ -34,12 +34,6 @@ if [ ! -d "/var/nodebb" ]
 then
 	echo "First time running. Preparing the working directory."
 	
-	if [ ! -d "public_copyme" ]
-	then
-		echo "ERROR: public_copyme/ not found! Build the app using the Makefile before deploying."
-		exit -1
-	fi
-
 	mkdir -p /var/nodebb
 	find `pwd` -mindepth 1 -maxdepth 1 \
 		! -type l \

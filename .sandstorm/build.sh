@@ -20,4 +20,6 @@ set -euo pipefail
 # By default, this script does nothing.  You'll have to modify it as
 # appropriate for your application.
 cd /opt/app
+make all
+make copy
 exit 0

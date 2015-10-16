@@ -1,4 +1,6 @@
-all: public_copyme config.json_copyme node_modules
+all: node_modules
+
+copy: public_copyme config.json_copyme
 
 public_copyme:
 	mv public public_copyme;\
