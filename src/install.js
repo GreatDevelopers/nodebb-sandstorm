@@ -205,13 +205,14 @@ function completeConfigSetup(err, config, next) {
 }
 
 function setupDatabase(server_conf, next) {
-	install.installDbDependencies(server_conf, function(err) {
+	require('./database').init(next);
+	/*install.installDbDependencies(server_conf, function(err) {
 		if (err) {
 			return next(err);
 		}
 
 		require('./database').init(next);
-	});
+	});*/
 }
 
 install.installDbDependencies = function(server_conf, next) {
@@ -549,9 +550,9 @@ install.setup = function (callback) {
 		setupDefaultConfigs,
 		enableDefaultTheme,
 		createCategories,
-		createAdministrator,
+		//createAdministrator,
 		createMenuItems,
-		createWelcomePost,
+		//createWelcomePost,
 		enableDefaultPlugins,
 		setCopyrightWidget,
 		function (next) {

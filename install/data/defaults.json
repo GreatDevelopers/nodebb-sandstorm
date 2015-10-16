@@ -11,7 +11,7 @@
     "maximumTagsPerTopic": 5,
     "allowGuestSearching": 0,
     "allowTopicsThumbnail": 0,
-    "registrationType": "normal",
+    "registrationType": "invite-only",
     "allowLocalLogin": 1,
     "allowAccountDelete": 1,
     "allowFileUploads": 0,
@@ -27,5 +27,7 @@
     "profileImageDimension": 128,
     "requireEmailConfirmation": 0,
     "profile:allowProfileImageUploads": 1,
-    "teaserPost": "last"
+    "teaserPost": "last",
+
+    "homePageRoute": "category/1/"
 }
