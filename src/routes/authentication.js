@@ -19,6 +19,10 @@
 		app.use(passport.session());
 
 		app.use(function(req, res, next) {
+			if (!req.user && req.path != "/sandstormlogin") {
+				return res.redirect("/sandstormlogin");
+			}
+
 			req.uid = req.user ? parseInt(req.user.uid, 10) : 0;
 			next();
 		});
