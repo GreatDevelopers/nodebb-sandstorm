@@ -63,6 +63,7 @@ module.exports = function(Meta) {
 					return callback(err);
 				}
 
+				source += '\n.breadcrumb, .forum-title, .category-list-container, .category > p.hidden-xs { display: none !important; }';
 				source += '\n@import (inline) "..' + path.sep + '..' + path.sep + 'public/vendor/jquery/css/smoothness/jquery-ui-1.10.4.custom.min.css";';
 				source += '\n@import (inline) "..' + path.sep + '..' + path.sep + 'public/vendor/jquery/bootstrap-tagsinput/bootstrap-tagsinput.css";';
 				source += '\n@import (inline) "..' + path.sep + '..' + path.sep + 'public/vendor/jquery/textcomplete/jquery.textcomplete.css";';

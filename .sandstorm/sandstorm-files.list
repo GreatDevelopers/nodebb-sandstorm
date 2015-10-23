@@ -749,6 +749,7 @@ opt/app/node_modules/nodebb-plugin-markdown/package.json
 opt/app/node_modules/nodebb-plugin-markdown/plugin.json
 opt/app/node_modules/nodebb-plugin-markdown/public/js/admin.js
 opt/app/node_modules/nodebb-plugin-markdown/public/js/client.js
+opt/app/node_modules/nodebb-plugin-markdown/public/js/highlight.js
 opt/app/node_modules/nodebb-plugin-markdown/public/languages
 opt/app/node_modules/nodebb-plugin-markdown/public/languages/en_GB
 opt/app/node_modules/nodebb-plugin-markdown/public/languages/en_GB/markdown.json

@@ -29,5 +29,5 @@
     "profile:allowProfileImageUploads": 1,
     "teaserPost": "last",
 
-    "homePageRoute": "category/1/"
+    "homePageRoute": "category/1/board"
 }

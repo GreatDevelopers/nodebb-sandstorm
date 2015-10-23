@@ -1,7 +1,7 @@
 [
     {
-        "name": "The board name - you shouldn't be seeing this, file a bug",
-        "description": "The board description - you shouldn't be seeing this, file a bug",
+        "name": "Board",
+        "description": "Board",
         "bgColor": "#fda34b",
         "color": "#fff",
         "icon" : "fa-comments-o",

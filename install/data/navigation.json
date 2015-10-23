@@ -1,11 +1,11 @@
 [
 	{
-		"route": "/categories",
-		"title": "\\[\\[global:header.categories\\]\\]",
+		"route": "/category/1/board",
+		"title": "Topics",
 		"enabled": true,
 		"iconClass": "fa-list",
 		"textClass": "visible-xs-inline",
-		"text": "\\[\\[global:header.categories\\]\\]"
+		"text": "Topics"
 	},
 	{
 		"id": "unread-count",
