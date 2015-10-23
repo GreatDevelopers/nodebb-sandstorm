@@ -252,6 +252,58 @@ authenticationController.localLogin = function(req, username, password, next) {
 	], next);
 };
 
+authenticationController.sandstormLogin = function(req, next) {
+	var sid = req.get('X-Sandstorm-User-Id');
+
+	async.waterfall([
+		function (next) {
+			console.log("logging in sid:", sid);
+			user.getUidBySandstormId(sid, next);
+		},
+		function (uid, next) {
+			if (uid) {
+				console.log("uid found, logging in. uid:", uid);
+				next(null, {'uid': uid});
+			} else {
+				console.log("uid not found, creating user");
+
+				var username_found = false;
+				var username = req.get('X-Sandstorm-Preferred-Handle');
+				async.whilst(
+					function() { return !username_found; },
+					function(next) {
+						console.log("checking whether username exists:", username);
+						user.getUidByUsername(username, function (err, uid) {
+							if (uid === null || uid === undefined) {
+								console.log("unique username");
+								username_found = true;
+								next();
+							} else {
+								console.log("username already exists");
+								username += Math.floor(Math.random() * 10).toString();
+								next();
+							}
+						});
+					},
+					function(err) {
+						console.log("registering", username);
+						user.create({
+							'username': username,
+							'sandstormId': sid,
+							'email': sid + '@example.com'
+						}, function (err, uid) {
+							if (err)
+								return next(err);
+							console.log("user created, logging in uid:", uid);
+							next(null, {'uid': uid});
+						});
+					});
+
+			}
+		}
+	], next);
+};
+
 authenticationController.logout = function(req, res, next) {
 	if (req.user && parseInt(req.user.uid, 10) > 0 && req.sessionID) {
 		var uid = parseInt(req.user.uid, 10);

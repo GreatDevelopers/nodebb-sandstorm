@@ -179,6 +179,10 @@ var	async = require('async'),
 		db.sortedSetScores('username:uid', usernames, callback);
 	};
 
+	User.getUidBySandstormId = function(id, callback) {
+		db.sortedSetScore('sandstormid:uid', id, callback);
+	};
+
 	User.getUidByUserslug = function(userslug, callback) {
 		if (!userslug) {
 			return callback(null, 0);

@@ -30,6 +30,7 @@ module.exports = function(User) {
 			var userData = {
 				'username': data.username,
 				'userslug': data.userslug,
+				'sandstormId': data.sandstormId,
 				'email': data.email,
 				'joindate': timestamp,
 				'picture': gravatar,
@@ -86,6 +87,10 @@ module.exports = function(User) {
 							},
 							function(next) {
 								db.sortedSetAdd('username:sorted', 0, userData.username.toLowerCase() + ':' + userData.uid, next);
+							},
+							function(next) {
+								console.log("adding sandstormid:uid", userData.uid, userData.sandstormId);
+								db.sortedSetAdd('sandstormid:uid', userData.uid, userData.sandstormId, next);
 							},
 							function(next) {
 								db.sortedSetAdd('userslug:uid', userData.uid, userData.userslug, next);

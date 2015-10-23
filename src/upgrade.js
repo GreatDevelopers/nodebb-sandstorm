@@ -244,6 +244,7 @@ Upgrade.upgrade = function(callback) {
 					async.apply(upgradeHashToSortedSet, 'email:uid'),
 					async.apply(upgradeHashToSortedSet, 'fullname:uid'),
 					async.apply(upgradeHashToSortedSet, 'username:uid'),
+					async.apply(upgradeHashToSortedSet, 'sandstormid:uid'),
 					async.apply(upgradeHashToSortedSet, 'userslug:uid'),
 				], function(err) {
 					if (err) {

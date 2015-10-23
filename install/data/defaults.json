@@ -11,7 +11,7 @@
     "maximumTagsPerTopic": 5,
     "allowGuestSearching": 0,
     "allowTopicsThumbnail": 0,
-    "registrationType": "invite-only",
+    "registrationType": "normal",
     "allowLocalLogin": 1,
     "allowAccountDelete": 1,
     "allowFileUploads": 0,

@@ -10,7 +10,7 @@ config.json_copyme:
 
 node_modules:
 	npm install --production;\
-	npm install redis connect-redis redisearch
+	npm install redis connect-redis redisearch passport-custom
 
 restore: restore_public restore_config
 

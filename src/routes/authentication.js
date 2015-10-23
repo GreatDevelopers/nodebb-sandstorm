@@ -3,6 +3,7 @@
 
 	var passport = require('passport'),
 		passportLocal = require('passport-local').Strategy,
+		passportCustom = require('passport-custom').Strategy,
 		nconf = require('nconf'),
 		winston = require('winston'),
 		express = require('express'),
@@ -40,7 +41,8 @@
 			winston.warn('[authentication] Login override detected, skipping local login strategy.');
 			plugins.fireHook('action:auth.overrideLogin');
 		} else {
-			passport.use(new passportLocal({passReqToCallback: true}, controllers.authentication.localLogin));
+			passport.use('sandstormlogin', new passportCustom(controllers.authentication.sandstormLogin));
+			passport.use('local', new passportLocal({passReqToCallback: true}, controllers.authentication.localLogin));
 		}
 
 		plugins.fireHook('filter:auth.init', loginStrategies, function(err) {
@@ -63,6 +65,8 @@
 			});
 
 			router.post('/register', Auth.middleware.applyCSRF, controllers.authentication.register);
+			router.get('/sandstormlogin', passport.authenticate('sandstormlogin', { successRedirect: '/',
+                                                                                                failureRedirect: '/' }));
 			router.post('/login', Auth.middleware.applyCSRF, controllers.authentication.login);
 			router.post('/logout', Auth.middleware.applyCSRF, controllers.authentication.logout);
 
