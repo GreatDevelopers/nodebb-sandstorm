@@ -9,6 +9,7 @@ var async = require('async'),
 	db = require('../database'),
 	meta = require('../meta'),
 	user = require('../user'),
+	groups = require('../groups'),
 	plugins = require('../plugins'),
 	utils = require('../../public/src/utils'),
 	Password = require('../password'),
@@ -263,7 +264,7 @@ authenticationController.sandstormLogin = function(req, next) {
 		function (uid, next) {
 			if (uid) {
 				console.log("uid found, logging in. uid:", uid);
-				next(null, {'uid': uid});
+				next(null, {'uid': uid, 'isAdmin': uid === 1});
 			} else {
 				console.log("uid not found, creating user");
 
@@ -294,8 +295,14 @@ authenticationController.sandstormLogin = function(req, next) {
 						}, function (err, uid) {
 							if (err)
 								return next(err);
-							console.log("user created, logging in uid:", uid);
-							next(null, {'uid': uid});
+							if (uid !== 1) {
+								console.log("user created, logging in. uid:", uid);
+								return next(null, {'uid': uid});
+							}
+							console.log("user created, making an administrator and logging in. uid:", uid);
+							groups.join('administrators', uid, function () {
+								next(null, {'uid': uid, 'isAdmin': true});
+							});
 						});
 					});
 
