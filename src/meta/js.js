@@ -43,7 +43,8 @@ module.exports = function(Meta) {
 				'public/src/ajaxify.js',
 				'public/src/overrides.js',
 				'public/src/variables.js',
-				'public/src/widgets.js'
+				'public/src/widgets.js',
+				'public/src/identicon.js'
 			],
 			rjs: [
 				'public/src/client/footer.js',

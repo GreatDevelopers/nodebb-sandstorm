@@ -140,7 +140,9 @@ var	async = require('async'),
 	};
 
 	User.createGravatarURLFromEmail = function(email) {
-		var customGravatarDefaultImage = meta.config.customGravatarDefaultImage;
+		email = email || '';
+		return 'identicon://' + (email.split("@")[0] || 'anonymous');
+		/*var customGravatarDefaultImage = meta.config.customGravatarDefaultImage;
 		if (customGravatarDefaultImage && customGravatarDefaultImage.indexOf('http') === -1) {
 			customGravatarDefaultImage = nconf.get('url') + meta.config.customGravatarDefaultImage;
 		}
@@ -155,7 +157,7 @@ var	async = require('async'),
 			email = '';
 		}
 
-		return gravatar.url(email, options, true);
+		return gravatar.url(email, options, true);*/
 	};
 
 	User.exists = function(uid, callback) {

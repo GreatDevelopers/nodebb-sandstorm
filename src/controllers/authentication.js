@@ -255,6 +255,7 @@ authenticationController.localLogin = function(req, username, password, next) {
 
 authenticationController.sandstormLogin = function(req, next) {
 	var sid = req.get('X-Sandstorm-User-Id');
+	var picture = req.get('X-Sandstorm-User-Picture') || '';
 
 	async.waterfall([
 		function (next) {
@@ -264,6 +265,9 @@ authenticationController.sandstormLogin = function(req, next) {
 		function (uid, next) {
 			if (uid) {
 				console.log("uid found, logging in. uid:", uid);
+				user.getUserField(uid, 'gravatar', function (err, gravatar) {
+					user.setUserFields(uid, {'picture': picture || gravatar, 'uploadedpicture': picture});
+				});
 				next(null, {'uid': uid, 'isAdmin': uid === 1});
 			} else {
 				console.log("uid not found, creating user");
@@ -291,6 +295,7 @@ authenticationController.sandstormLogin = function(req, next) {
 						user.create({
 							'username': username,
 							'sandstormId': sid,
+							'picture': picture,
 							'email': sid + '@example.com'
 						}, function (err, uid) {
 							if (err)
