@@ -19,7 +19,7 @@
 		app.use(passport.session());
 
 		app.use(function(req, res, next) {
-			if (!req.user && req.path != "/sandstormlogin") {
+			if (!req.user && req.path != "/sandstormlogin" && req.get('X-Sandstorm-User-Id')) {
 				return res.redirect("/sandstormlogin");
 			}
 
