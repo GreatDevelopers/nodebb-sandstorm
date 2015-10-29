@@ -94,7 +94,7 @@ helpers.getUserDataByUserSlug = function(userslug, callerUID, callback) {
 			userData.followerCount = parseInt(userData.followerCount, 10) || 0;
 
 			userData.username = validator.escape(userData.username);
-			userData.email = validator.escape(userData.email);
+			delete userData.email;
 			userData.fullname = validator.escape(userData.fullname);
 			userData.location = validator.escape(userData.location);
 			userData.signature = validator.escape(userData.signature);
