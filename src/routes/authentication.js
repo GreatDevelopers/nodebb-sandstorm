@@ -68,11 +68,11 @@
 				}));
 			});
 
-			router.post('/register', Auth.middleware.applyCSRF, controllers.authentication.register);
+			//router.post('/register', Auth.middleware.applyCSRF, controllers.authentication.register);
 			router.get('/sandstormlogin', passport.authenticate('sandstormlogin', { successRedirect: '/',
                                                                                                 failureRedirect: '/' }));
-			router.post('/login', Auth.middleware.applyCSRF, controllers.authentication.login);
-			router.post('/logout', Auth.middleware.applyCSRF, controllers.authentication.logout);
+			//router.post('/login', Auth.middleware.applyCSRF, controllers.authentication.login);
+			//router.post('/logout', Auth.middleware.applyCSRF, controllers.authentication.logout);
 
 			hotswap.replace('auth', router);
 			if (typeof callback === 'function') {

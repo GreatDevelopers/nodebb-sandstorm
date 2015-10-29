@@ -24,8 +24,8 @@ function mainRoutes(app, middleware, controllers) {
 
 	var loginRegisterMiddleware = [middleware.redirectToAccountIfLoggedIn];
 
-	setupPageRoute(app, '/login', middleware, loginRegisterMiddleware, controllers.login);
-	setupPageRoute(app, '/register', middleware, loginRegisterMiddleware, controllers.register);
+	//setupPageRoute(app, '/login', middleware, loginRegisterMiddleware, controllers.login);
+	//setupPageRoute(app, '/register', middleware, loginRegisterMiddleware, controllers.register);
 	setupPageRoute(app, '/compose', middleware, [middleware.authenticate], controllers.compose);
 	setupPageRoute(app, '/confirm/:code', middleware, [], controllers.confirmEmail);
 	setupPageRoute(app, '/outgoing', middleware, [], controllers.outgoing);
