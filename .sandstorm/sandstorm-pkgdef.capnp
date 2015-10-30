@@ -21,7 +21,7 @@ const pkgdef :Spk.PackageDefinition = (
 
     appVersion = 0,  # Increment this for every release.
 
-    appMarketingVersion = (defaultText = "0.0.0"),
+    appMarketingVersion = (defaultText = "0.8.2"),
     # Human-readable representation of appVersion. Should match the way you
     # identify versions of your app in documentation and marketing.
 
@@ -34,11 +34,41 @@ const pkgdef :Spk.PackageDefinition = (
       )
     ],
 
-    continueCommand = .myCommand
+    continueCommand = .myCommand,
     # This is the command called to start your app back up after it has been
     # shut down for inactivity. Here we're using the same command as for
     # starting a new instance, but you could use different commands for each
     # case.
+
+    metadata = (
+      icons = (
+        #appGrid = (png = (dpi1x = embed "app-graphics/appGrid.png")),
+        #grain = (png = (dpi1x = embed "app-graphics/grain.png")),
+        #market = (png = (dpi1x = embed "app-graphics/market.png")),
+      ),
+
+      website = "https://nodebb.org",
+      codeUrl = "https://github.com/cem/nodebb-sandstorm",
+      license = (openSource = gpl3),
+      categories = [communications],
+
+      author = (
+        contactEmail = "cem@soda9.co",
+        pgpSignature = embed "pgp-signature",
+        upstreamAuthor = "NodeBB Inc.",
+      ),
+      pgpKeyring = embed "pgp-keyring",
+
+      description = (defaultText = embed "description.md"),
+      shortDescription = (defaultText = "Forum"),
+
+      screenshots = [
+        (width = 1056, height = 680, png = embed "screenshot.png")
+      ],
+
+      #changeLog = (defaultText = embed "CHANGELOG.md"),
+    ),
+ 
   ),
 
   sourceMap = (
