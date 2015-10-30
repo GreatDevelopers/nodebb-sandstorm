@@ -42,9 +42,9 @@ const pkgdef :Spk.PackageDefinition = (
 
     metadata = (
       icons = (
-        #appGrid = (png = (dpi1x = embed "app-graphics/appGrid.png")),
-        #grain = (png = (dpi1x = embed "app-graphics/grain.png")),
-        #market = (png = (dpi1x = embed "app-graphics/market.png")),
+        appGrid = (png = (dpi1x = embed "app-graphics/appGrid.png")),
+        grain = (png = (dpi1x = embed "app-graphics/grain.png")),
+        market = (png = (dpi1x = embed "app-graphics/market.png")),
       ),
 
       website = "https://nodebb.org",
