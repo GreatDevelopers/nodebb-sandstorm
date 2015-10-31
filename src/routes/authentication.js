@@ -20,7 +20,13 @@
 
 		app.use(function(req, res, next) {
 			if (!req.user && req.path != "/sandstormlogin" && req.get('X-Sandstorm-User-Id')) {
-				return res.redirect("/sandstormlogin");
+				var permissions = (req.get('X-Sandstorm-Permissions') || '').split(',');
+				var isAdmin = permissions.indexOf('moderate') != -1;
+				var isPoster = isAdmin || (permissions.indexOf('post') != -1);
+
+				// Do not log in non-posters.
+				if (isPoster)
+					return res.redirect("/sandstormlogin");
 			}
 
 			req.uid = req.user ? parseInt(req.user.uid, 10) : 0;

@@ -256,6 +256,14 @@ authenticationController.localLogin = function(req, username, password, next) {
 authenticationController.sandstormLogin = function(req, next) {
 	var sid = req.get('X-Sandstorm-User-Id');
 	var picture = req.get('X-Sandstorm-User-Picture') || '';
+	var permissions = (req.get('X-Sandstorm-Permissions') || '').split(',');
+	var isAdmin = permissions.indexOf('moderate') != -1;
+	var isPoster = isAdmin || (permissions.indexOf('post') != -1);
+	if (!sid || !isPoster) {
+		var errMsg = "Cannot login empty sid or non-poster!"
+		console.log(errMsg)
+		return next(new Error(errMsg));
+	}
 
 	async.waterfall([
 		function (next) {
@@ -264,54 +272,65 @@ authenticationController.sandstormLogin = function(req, next) {
 		},
 		function (uid, next) {
 			if (uid) {
-				console.log("uid found, logging in. uid:", uid);
-				user.getUserField(uid, 'gravatar', function (err, gravatar) {
-					user.setUserFields(uid, {'picture': picture || gravatar, 'uploadedpicture': picture});
-				});
-				next(null, {'uid': uid, 'isAdmin': uid === 1});
-			} else {
-				console.log("uid not found, creating user");
-
-				var username_found = false;
-				var username = req.get('X-Sandstorm-Preferred-Handle');
-				async.whilst(
-					function() { return !username_found; },
-					function(next) {
-						console.log("checking whether username exists:", username);
-						user.getUidByUsername(username, function (err, uid) {
-							if (uid === null || uid === undefined) {
-								console.log("unique username");
-								username_found = true;
-								next();
-							} else {
-								console.log("username already exists");
-								username += Math.floor(Math.random() * 10).toString();
-								next();
-							}
-						});
-					},
-					function(err) {
-						console.log("registering", username);
-						user.create({
-							'username': username,
-							'sandstormId': sid,
-							'picture': picture,
-							'email': sid + '@example.com'
-						}, function (err, uid) {
-							if (err)
-								return next(err);
-							if (uid !== 1) {
-								console.log("user created, logging in. uid:", uid);
-								return next(null, {'uid': uid});
-							}
-							console.log("user created, making an administrator and logging in. uid:", uid);
-							groups.join('administrators', uid, function () {
-								next(null, {'uid': uid, 'isAdmin': true});
-							});
-						});
-					});
-
+				console.log("uid found, not registering:", uid);
+				return next(null, uid);
 			}
+			console.log("uid not found, registering user");
+
+			var uniqueUsernameFound = false;
+			var username = req.get('X-Sandstorm-Preferred-Handle') || 'user';
+			async.whilst(
+				function() { return !uniqueUsernameFound; },
+				function(next) {
+					console.log("checking whether username exists:", username);
+					user.getUidByUsername(username, function (err, uid) {
+						if (uid === null || uid === undefined) {
+							console.log("found unique username");
+							uniqueUsernameFound = true;
+							next();
+						} else {
+							console.log("username already exists");
+							username += Math.floor(Math.random() * 10).toString();
+							next();
+						}
+					});
+				},
+				function() {
+					console.log("registering", username);
+					user.create({
+						'username': username,
+						'sandstormId': sid,
+						'picture': picture,
+						'email': sid + '@example.com'
+					}, function (err, uid) {
+						if (err)
+							console.log("error while creating user!");
+						else
+							console.log("user created. uid:", uid);
+						return next(err, uid);
+					});
+				}
+			);
+		},
+		function (uid, next) {
+			async.parallel([
+				function(callback) {
+					console.log("updating avatar");
+					user.getUserField(uid, 'gravatar', function (err, gravatar) {
+						user.setUserFields(uid, {'picture': picture || gravatar, 'uploadedpicture': picture}, callback);
+					});
+				},
+				function(callback) {
+					console.log("updating administrator status");
+					if (isAdmin)
+						groups.join('administrators', uid, callback);
+					else
+						groups.leave('administrators', uid, callback);
+				}
+			],
+			function () {
+				next(null, {'uid': uid, 'isAdmin': isAdmin});
+			});
 		}
 	], next);
 };

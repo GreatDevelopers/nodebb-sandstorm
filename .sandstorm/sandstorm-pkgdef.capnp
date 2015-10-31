@@ -93,12 +93,32 @@ const pkgdef :Spk.PackageDefinition = (
   # `spk dev` will write a list of all the files your app uses to this file.
   # You should review it later, before shipping your app.
 
-  alwaysInclude = []
+  alwaysInclude = [],
   # Fill this list with more names of files or directories that should be
   # included in your package, even if not listed in sandstorm-files.list.
   # Use this to force-include stuff that you know you need but which may
   # not have been detected as a dependency during `spk dev`. If you list
   # a directory here, its entire contents will be included recursively.
+
+
+  bridgeConfig = (
+    viewInfo = (
+      permissions = [(name = "post", title = (defaultText = "post"),
+                      description = (defaultText = "allows posting on the forum")),
+                     (name = "moderate", title = (defaultText = "moderate"),
+                      description = (defaultText = "allows moderating the forum"))],
+      roles = [(title = (defaultText = "poster"),
+                permissions = [true, false],
+                verbPhrase = (defaultText = "can post"),
+                default = true),
+               (title = (defaultText = "viewer"),
+                permissions = [false, false],
+                verbPhrase = (defaultText = "can view")),
+               (title = (defaultText = "moderator"),
+                permissions = [true, true],
+                verbPhrase = (defaultText = "can moderate"))]
+    )
+  )
 );
 
 const myCommand :Spk.Manifest.Command = (
