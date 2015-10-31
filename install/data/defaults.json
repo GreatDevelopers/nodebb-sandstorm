@@ -1,6 +1,6 @@
 {
     "title": "NodeBB",
-    "showSiteTitle": 1,
+    "showSiteTitle": 0,
     "postDelay": 10,
     "initialPostDelay": 10,
     "newbiePostDelay": 120,

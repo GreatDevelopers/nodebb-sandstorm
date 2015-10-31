@@ -1,4 +1,10 @@
-li[component="user/logout"], a[href="/login"], a[href="/register"], a[href^="/user/"][href$="/edit"], a[href^="/user/"][href$="/settings"] {
+li[component="user/logout"],
+a[href="/login"], a[href="/register"],
+a[href^="/user/"][href$="/edit"],
+a[href^="/user/"][href$="/settings"],
+.breadcrumb,
+.category-list-container,
+.category > p.hidden-xs {
 	display: none !important;
 }
 
