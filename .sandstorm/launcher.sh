@@ -45,12 +45,15 @@ then
 	cp    config.json_copyme /var/nodebb/config.json
 	touch /var/nodebb/output.log
 	cd /var/nodebb
+
 	redis-server &
 	until redis-cli config set save "10 1"
 	do
 		echo "Waiting for Redis to start..."
 		sleep 0.5s
 	done
+	redis-cli hset settings:markdown externalBlank on
+
 	nodejs app.js --setup="{\"url\":\"http://127.0.0.1:8000/\",\"secret\":\"abcdef\",\"database\":\"redis\",\"mongo:host\":\"127.0.0.1\",\"mongo:port\":27017,\"mongo:username\":\"\",\"mongo:password\":\"\",\"mongo:database\":0,\"redis:host\":\"127.0.0.1\",\"redis:port\":6379,\"redis:password\":\"\",\"redis:database\":0,\"admin:username\":\"admin\",\"admin:email\":\"test@example.org\",\"admin:password\":\"abcdef\",\"admin:password:confirm\":\"abcdef\"}" 
 else
 	echo "Re-launching."
