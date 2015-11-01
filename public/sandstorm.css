@@ -1,5 +1,5 @@
 li[component="user/logout"],
-a[href="/login"], a[href="/register"],
+a[href="/login"], a[href="/register"], a[href="/groups"],
 a[href^="/user/"][href$="/edit"],
 a[href^="/user/"][href$="/settings"],
 .breadcrumb,
